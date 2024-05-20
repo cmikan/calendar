@@ -4,7 +4,7 @@
 int main (int argc, char **argv)
 {
     char *day;
-    int result = weekday(13, 6, 1042);
+    int result = weekday(20, 5, 2024);
     //printf("%d\n", result);
     switch(result)
     {
