@@ -50,7 +50,7 @@ int weekday(int day, int month, int year)
                     day_index -= 3;
                 }
             }
-        case 2:
+            break;
     }
 
     // Year
