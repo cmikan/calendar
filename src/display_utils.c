@@ -75,7 +75,7 @@ void draw_calendar(int month, int year)
 
     for (int i = 0; i < nb_days; i++)
     {
-        if ((i + empty_days) % 7 == 0)
+        if ((i + empty_days) % 7 == 0 && (i + empty_days) != 0)
         {
             printf("\n");
         }
