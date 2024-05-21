@@ -11,10 +11,19 @@
 int weekday(int day, int month, int year);
 
 /**
- * Check if a year is a leap year
+ * Check if a year is a leap year.
  * @param year the year
- * @return 1 is leap year, 0 if not
+ * @return 1 is leap year, 0 otherwise.
  */
 int is_bissextile(int year);
+
+/**
+ * Check if a date is valid.
+ * @param day the day
+ * @param month the month
+ * @param year the year
+ * @return 1 if the date is valid, 0 otherwise.
+ */
+int check_date(int day, int month, int year);
 
 #endif // _CALENDAR_DAY_UTILS_H_

@@ -72,3 +72,74 @@ int weekday(int day, int month, int year)
     day_index %= 7;
     return day_index;
 }
+
+int check_date(int day, int month, int year)
+{
+    if (year < 1)
+    {
+        fprintf(stderr, "Year %d is not valid.\n", year);
+        return 0;
+    }
+
+    if (month < 1 || month > 12)
+    {
+        fprintf(stderr, "Month %d does not exist.\n", month);
+        return 0;
+    }
+
+    if (day < 1)
+    {
+        fprintf(stderr, "Day must be greater than 0.\n");
+        return 0;
+    }
+
+    switch (month)
+    {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            if (day > 31)
+            {
+                fprintf(stderr, "Month %d only have 31 days.\n", month);
+                return 0;
+            }
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            if (day > 31)
+            {
+                fprintf(stderr, "Month %d only have 30 days.\n", month);
+                return 0;
+            }
+            break;
+        case 2:
+            if (is_bissextile(year))
+            {
+                if (day > 29)
+                {
+                    fprintf(stderr, "Month %d only have 29 days.\n", month);
+                    return 0;
+                }
+            }
+            else
+            {
+                if (day == 29)
+                {
+                    fprintf(stderr, "%d is a not a leap year. February only have 28 days.\n", year);
+                    return 0;
+                }
+                else if (day > 29)
+                {
+                    fprintf(stderr, "Month %d only have 28 days.\n", month);
+                    return 0;
+                }
+            }
+    }
+    return 1;
+}
