@@ -1,7 +1,23 @@
-/**
- * Determine the day of the week for the date day/month/year
- * @return An int beetwen 0 and 6; 0 for monday, 6 for sunday
- */
+int is_bissextile(int year)
+{
+    int return_value = 0;
+    if (year > 1582) // Gregorian calendar
+    {
+        if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+        {
+            return_value = 1;
+        }
+    }
+    else // Julian calendar
+    {
+        if (year % 4 == 0)
+        {
+            return_value = 1;
+        }
+    }
+    return return_value;
+}
+
 int weekday(int day, int month, int year)
 {
     int day_index = 4; // The day before the 01/01/0001, if it make sens
@@ -28,27 +44,13 @@ int weekday(int day, int month, int year)
             day_index--;
         case 4:
         case 3:
-            if (year > 1582)
+            if (is_bissextile(year))
             {
-                if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
-                {
-                    day_index -= 2;
-                }
-                else
-                {
-                    day_index -= 3;
-                }
+                day_index -= 2;
             }
             else
             {
-                if (year % 4 == 0)
-                {
-                    day_index -= 2;
-                }
-                else
-                {
-                    day_index -= 3;
-                }
+                day_index -= 3;
             }
             break;
     }
