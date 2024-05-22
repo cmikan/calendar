@@ -161,6 +161,10 @@ void keyboardManager(int *quit, int *month, int *year)
                                     *month = 12;
                                     (*year)--;
                                 }
+                                else
+                                {
+                                    *month = 1;
+                                }
                                 return;
                         }
                     }
