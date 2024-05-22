@@ -69,9 +69,9 @@ int draw_calendar(int month, int year)
             break;
     }
 
-    printf("   %s %d\n", mont_name, year);
+    printf("  \033[31m%s %d\033[0m\n", mont_name, year);
 
-    printf(" mo tu we th fr sa su\n");
+    printf("\033[93m mo tu we th fr sa su\033[0m\n");
     line_nb += 2;
     int empty_days = weekday(1, month, year);
     for (int i = 0; i < empty_days; i++)
@@ -86,7 +86,19 @@ int draw_calendar(int month, int year)
             printf("\n");
             line_nb += 1;
         }
-        printf("%*d", 3, i + 1); // i start at 0
+        char *before;
+        char *after;
+        if ((i + empty_days) % 7 == 6) // Sunday
+        {
+            before = "\033[31m";
+            after = "\033[0m";
+        }
+        else
+        {
+            before = "";
+            after = "";
+        }
+        printf("%s%*d%s", before, 3, i + 1, after);
     }
     printf("\n");
     line_nb += 1;
