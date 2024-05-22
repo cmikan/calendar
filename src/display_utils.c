@@ -106,22 +106,17 @@ void enableRawMode(struct termios *original)
 {
     struct termios raw;
 
-    // Get current terminal attributes
     tcgetattr(STDIN_FILENO, original);
 
-    // Copy to raw mode
     raw = *original;
 
-    // Modify terminal attributes
-    raw.c_lflag &= ~(ICANON | ECHO); // Disable canonical mode and echo
-    raw.c_cc[VMIN] = 0;  // Minimum number of characters for noncanonical read
-    raw.c_cc[VTIME] = 1; // Timeout in deciseconds for noncanonical read
+    raw.c_lflag &= ~(ICANON | ECHO);
+    raw.c_cc[VMIN] = 0;
+    raw.c_cc[VTIME] = 1;
 
-    // Set the new attributes
     tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 }
 
-// Function to restore original terminal settings
 void disableRawMode(struct termios *original)
 {
     tcsetattr(STDIN_FILENO, TCSANOW, original);
@@ -158,7 +153,7 @@ void keyboardManager(int *quit, int *month, int *year)
                         }
                     }
                 }
-            } else if (c == 'q') { // Exit on 'q' key press
+            } else if (c == 'q') {
                 *quit = 1;
                 return;
             }
