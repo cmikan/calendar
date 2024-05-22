@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <termios.h>
+
 #include "day_utils.h"
 #include "display_utils.h"
 
@@ -38,10 +40,24 @@ int main (int argc, char **argv)
             return -1;
     }
 
+    struct termios original;
+    enableRawMode(&original);
+
     if (!check_date(day, month, year))
     {
         return -1;
     }
-    draw_calendar(month, year);
+
+    int quit = 0;
+    int nb_line = 0;
+
+    while(!quit)
+    {
+        clear_calendar(nb_line);
+        nb_line = draw_calendar(month, year);
+        keyboardManager(&quit, &month, &year);
+    }
+
+    disableRawMode(&original);
     return 0;
 }
