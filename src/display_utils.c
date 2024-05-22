@@ -69,7 +69,7 @@ int draw_calendar(int month, int year)
             break;
     }
 
-    printf("  \033[31m%s %d\033[0m\n", mont_name, year);
+    printf("   \033[31m%s %d\033[0m\n", mont_name, year);
 
     printf("\033[93m mo tu we th fr sa su\033[0m\n");
     line_nb += 2;
