@@ -69,9 +69,9 @@ int draw_calendar(int month, int year)
             break;
     }
 
-    printf("   \033[31m%s %d\033[0m\n", mont_name, year);
+    printf("   \033[31m\033[1m%s %d\033[0m\n", mont_name, year);
 
-    printf("\033[93m mo tu we th fr sa su\033[0m\n");
+    printf("\033[93m\033[1m mo tu we th fr sa su\033[0m\n");
     line_nb += 2;
     int empty_days = weekday(1, month, year);
     for (int i = 0; i < empty_days; i++)
@@ -138,40 +138,58 @@ void keyboardManager(int *quit, int *month, int *year)
 {
     char c;
     while (1) {
-        if (read(STDIN_FILENO, &c, 1) == 1) {
-            if (c == 27) { // Escape character
-                char seq[2];
-                if (read(STDIN_FILENO, &seq[0], 1) == 1 && read(STDIN_FILENO, &seq[1], 1) == 1) {
-                    if (seq[0] == '[') {
-                        switch (seq[1]) {
-                            case 'A':
-                            case 'C':
-                                *month += 1;
-                                if (*month == 13)
-                                {
-                                    *month = 1;
-                                    (*year)++;
-                                }
-                                return;
-                            case 'B':
-                            case 'D':
-                                *month -= 1;
-                                if (*month == 0 && (*year) > 1)
-                                {
-                                    *month = 12;
-                                    (*year)--;
-                                }
-                                else
-                                {
-                                    *month = 1;
-                                }
-                                return;
+        if (read(STDIN_FILENO, &c, 1) == 1)
+        {
+            switch (c)
+            {
+                case 27: // Escape character
+                {
+                    char seq[2];
+                    if (read(STDIN_FILENO, &seq[0], 1) == 1 && read(STDIN_FILENO, &seq[1], 1) == 1) 
+                    {
+                        if (seq[0] == '[') 
+                        {
+                            switch (seq[1]) 
+                            {
+                                case 'A':
+                                case 'C':
+                                    
+                                case 'B':
+                                case 'D':
+                                    return;
+                            }
                         }
                     }
                 }
-            } else if (c == 'q') {
-                *quit = 1;
-                return;
+                case '+':
+                {
+                    *month += 1;
+                    if (*month == 13)
+                    {
+                        *month = 1;
+                        (*year)++;
+                    }
+                    return;
+                }
+                case '-':
+                {
+                    *month -= 1;
+                    if (*month == 0 && (*year) > 1)
+                    {
+                        *month = 12;
+                        (*year)--;
+                    }
+                    else
+                    {
+                        *month = 1;
+                    }
+                    return;
+                }
+                case 'q':
+                {
+                    *quit = 1;
+                    return;
+                }
             }
         }
     }
