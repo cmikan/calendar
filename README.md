@@ -23,4 +23,5 @@ You can also input a date with the format dd/mm/yyyy.
 ```
 
 Change the displayed month with **o** (previous month) and **p** (next month).
+
 Use the arrow keys to arrow keys to select a day.
