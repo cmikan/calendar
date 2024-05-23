@@ -26,7 +26,19 @@ int is_bissextile(int year);
  */
 int check_date(int day, int month, int year);
 
+/**
+ * Returns the number of days in the specified month of a given year.
+ * @param month the month
+ * @param year the year
+ * @return the number of days.
+ */
 int day_in_month(int month, int year);
+
+/**
+ *  Give the name of a month.
+ * @param month the month
+ * @param name the output
+ */
 void month_name(int month, char **name);
 
 #endif // _CALENDAR_DAY_UTILS_H_
