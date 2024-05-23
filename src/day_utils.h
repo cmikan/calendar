@@ -26,4 +26,7 @@ int is_bissextile(int year);
  */
 int check_date(int day, int month, int year);
 
+int day_in_month(int month, int year);
+void month_name(int month, char **name);
+
 #endif // _CALENDAR_DAY_UTILS_H_
