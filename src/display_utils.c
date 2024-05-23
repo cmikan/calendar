@@ -156,7 +156,7 @@ void keyboardManager(int *quit, int *day, int *month, int *year)
                         }
                     }
                 }
-                case '+':
+                case 'p':
                 {
                     *month += 1;
                     if (*month == 13)
@@ -166,7 +166,7 @@ void keyboardManager(int *quit, int *day, int *month, int *year)
                     }
                     return;
                 }
-                case '-':
+                case 'o':
                 {
                     *month -= 1;
                     if (*month == 0 && (*year) > 1)
