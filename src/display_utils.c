@@ -38,7 +38,7 @@ int draw_calendar(int day, int month, int year)
         {
             if (day - 1 == i)
             {
-                before = " \033[31m\033[1m\033[107m";
+                before = " \033[31m\033[1m\033[43m";
                 after = "\033[0m";
             }
             else
@@ -51,7 +51,7 @@ int draw_calendar(int day, int month, int year)
         {
             if (day - 1 == i)
             {
-                before = " \033[1m\033[107m";
+                before = " \033[1m\033[43m";
                 after = "\033[0m";
             }
             else
