@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <termios.h>
+#include <string.h>
 
 #include "day_utils.h"
 
@@ -130,15 +131,32 @@ int draw_calendar(int day, int month, int year)
         char *after;
         if ((i + empty_days) % 7 == 6) // Sunday
         {
-            before = "\033[31m";
-            after = "\033[0m";
+            if (day - 1 == i)
+            {
+                before = " \033[31m\033[1m\033[107m";
+                after = "\033[0m";
+            }
+            else
+            {
+                before = " \033[31m";
+                after = "\033[0m";
+            }
         }
         else
         {
-            before = "";
-            after = "";
+            if (day - 1 == i)
+            {
+                before = " \033[1m\033[107m";
+                after = "\033[0m";
+            }
+            else
+            {
+                before = " ";
+                after = "";
+            }
         }
-        printf("%s%*d%s", before, 3, i + 1, after);
+
+        printf("%s%*d%s", before, 2, i + 1, after);
     }
     printf("\n");
     line_nb += 1;
@@ -251,7 +269,7 @@ void keyboardManager(int *quit, int *day, int *month, int *year)
                         *month = 12;
                         (*year)--;
                     }
-                    else if (*month_name == 0)
+                    else if (*month == 0)
                     {
                         *month = 1;
                     }
