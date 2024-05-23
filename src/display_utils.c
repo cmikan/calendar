@@ -5,19 +5,15 @@
 
 #include "day_utils.h"
 
-int draw_calendar(int month, int year)
+int day_in_month(int month, int year)
 {
-    int line_nb = 0;
-    int nb_days = 0;
-    char *mont_name;
+    int nb_days;
     switch (month)
     {
         case 1:
-            mont_name = "January";
             nb_days = 31;
             break;
         case 2:
-            mont_name = "February";
             if (is_bissextile(year))
             {
                 nb_days = 29;
@@ -28,46 +24,90 @@ int draw_calendar(int month, int year)
             }
             break;
         case 3:
-            mont_name = "March";
             nb_days = 31;
             break;
         case 4:
-            mont_name = "April";
             nb_days = 30;
             break;
         case 5:
-            mont_name = "May";
             nb_days = 31;
             break;
         case 6:
-            mont_name = "June";
             nb_days = 30;
             break;
         case 7:
-            mont_name = "July";
             nb_days = 31;
             break;
         case 8:
-            mont_name = "August";
             nb_days = 31;
             break;
         case 9:
-            mont_name = "September";
             nb_days = 30;
             break;
         case 10:
-            mont_name = "October";
             nb_days = 31;
             break;
         case 11:
-            mont_name = "November";
             nb_days = 30;
             break;
         case 12:
-            mont_name = "December";
             nb_days = 31;
             break;
     }
+    return nb_days;
+}
+
+void month_name(int month, char **name)
+{
+    switch (month)
+    {
+        case 1:
+            *name = "January";
+            break;
+        case 2:
+            *name = "February";
+            break;
+        case 3:
+            *name = "March";
+            break;
+        case 4:
+            *name = "April";
+            break;
+        case 5:
+            *name = "May";
+            break;
+        case 6:
+            *name = "June";
+            break;
+        case 7:
+            *name = "July";
+            break;
+        case 8:
+            *name = "August";
+            break;
+        case 9:
+            *name = "September";
+            break;
+        case 10:
+            *name = "October";
+            break;
+        case 11:
+            *name = "November";
+            break;
+        case 12:
+            *name = "December";
+            break;
+    }
+}
+
+int draw_calendar(int day, int month, int year)
+{
+    int line_nb = 0;
+    int nb_days = 0;
+    char *mont_name;
+    month_name(month, &mont_name);
+    
+    nb_days = day_in_month(month, year);
 
     printf("   \033[31m\033[1m%s %d\033[0m\n", mont_name, year);
 
@@ -134,7 +174,7 @@ void disableRawMode(struct termios *original)
     tcsetattr(STDIN_FILENO, TCSANOW, original);
 }
 
-void keyboardManager(int *quit, int *month, int *year)
+void keyboardManager(int *quit, int *day, int *month, int *year)
 {
     char c;
     while (1) {
@@ -151,12 +191,44 @@ void keyboardManager(int *quit, int *month, int *year)
                         {
                             switch (seq[1]) 
                             {
-                                case 'A':
-                                case 'C':
-                                    
-                                case 'B':
-                                case 'D':
+                                case 'A': // Up arrow
+                                {
+                                    *day -= 7;
+                                    if (*day < 1)
+                                    {
+                                        *day = 1;
+                                    }
                                     return;
+                                }
+                                case 'B': // Down arrow
+                                {
+                                    *day += 7;
+                                    int tmp = day_in_month(*month, *year);
+                                    if (*day > tmp)
+                                    {
+                                        *day = tmp;
+                                    }
+                                    return;
+                                }
+                                case 'C': // Right arrow
+                                {
+                                    *day += 1;
+                                    int tmp = day_in_month(*month, *year);
+                                    if (*day > tmp)
+                                    {
+                                        *day = tmp;
+                                    }
+                                    return;
+                                }
+                                case 'D': // Left arrow
+                                {
+                                    *day -= 1;
+                                    if (*day < 1)
+                                    {
+                                        *day = 1;
+                                    }
+                                    return;
+                                }
                             }
                         }
                     }
@@ -179,7 +251,7 @@ void keyboardManager(int *quit, int *month, int *year)
                         *month = 12;
                         (*year)--;
                     }
-                    else
+                    else if (*month_name == 0)
                     {
                         *month = 1;
                     }

@@ -54,8 +54,8 @@ int main (int argc, char **argv)
     while(!quit)
     {
         clear_calendar(nb_line);
-        nb_line = draw_calendar(month, year);
-        keyboardManager(&quit, &month, &year);
+        nb_line = draw_calendar(day, month, year);
+        keyboardManager(&quit, &day, &month, &year);
     }
 
     disableRawMode(&original);
